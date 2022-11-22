@@ -48,7 +48,7 @@ else{
 }
 
 ?>
-<form name="search" method="get" action=<?php echo $_SERVER['PHP_SELF']."?action=search" ?> id="search">
+<form name="search" method="get" action=<?php echo strip_tags($_SERVER['PHP_SELF']."?action=search") ?> id="search">
     <input type="text" value="" name="keyword"/>
     <input type="submit" name="search" value="Bilatu"/>
 </form>

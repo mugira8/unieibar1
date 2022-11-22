@@ -15,7 +15,11 @@ if(isset($_GET['postdescription'])){
     $crntquery = mysqli_query($conx,"SELECT deskripzioa, salneurria FROM produktuak WHERE ID LIKE ".$_GET['pic_id']);
     $crntcomm = mysqli_fetch_array($crntquery);
 
-   $deskripzioa = $_POST['deskripzioa'];
+    if($_POST['deskripzioa'] != ''){
+        $deskripzioa = $_POST['deskripzioa'];
+    }else{
+        echo "Deskribapena derrigorrezkoa da";
+    }
 
     if ($_POST['salneurria'] != '') {
         $salneurria = $_POST['salneurria'];
@@ -25,7 +29,7 @@ if(isset($_GET['postdescription'])){
 
     mysqli_query($conx,"UPDATE produktuak SET deskripzioa = '".$deskripzioa."', salneurria = ".$salneurria." WHERE ID LIKE ".$_GET['pic_id']);
 
-    header("Location: ".$_SERVER['PHP_SELF']);
+    //header("Location: ".$_SERVER['PHP_SELF']);
   
 }else{
 
@@ -36,13 +40,11 @@ if(isset($_GET['postdescription'])){
     <legend><b>Descripción</b></legend>
     <br>
     <?php
-
         $picquery = mysqli_query($conx,"SELECT * FROM produktuak WHERE ID = ".$_GET['pic_id']);
         $data = mysqli_fetch_array($picquery);
 
         echo "<h4>".$data['izena']." - ".$data['salneurria']."€</h4>";
         echo "<img src=images/".$data['pic']." border=1><br>";
-
     ?>
     <br>
     <form action="<?php echo $_SERVER['PHP_SELF']."?action=description&pic_id=".$_GET['pic_id']."&postdescription=1";?>" method=POST>
