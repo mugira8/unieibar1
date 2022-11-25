@@ -6,7 +6,6 @@ include("conf.php");
 include("includes/mysql.php");
 
 ?>
-
 <html>
 <head>
 <title><?php echo $enpresa; ?></title>
@@ -48,7 +47,7 @@ else{
 }
 
 ?>
-<form name="search" method="get" action=<?php echo strip_tags($_SERVER['PHP_SELF']."?action=search") ?> id="search">
+<form name="search" method="post" action=<?php echo $_SERVER['PHP_SELF']."?action=search" ?> id="search">
     <input type="text" value="" name="keyword"/>
     <input type="submit" name="search" value="Bilatu"/>
 </form>
@@ -57,6 +56,7 @@ else{
 <br>
 
 <?php
+include ("includes/checker.php");
 if(isset($_GET['action'])){
     switch($_GET['action']){
       case("updel"):
@@ -76,8 +76,11 @@ if(isset($_GET['action'])){
         include("includes/description.php");
       break;
       case("search"):
-            include("includes/main.php");
-            break;
+        $sanitizar = escape($_POST['keyword']);
+        if(isset($sanitizar) && preg_match("/^[a-zA-Z]+/", $sanitizar)){
+          include("includes/main.php");
+        }
+          break;
       case("account"):
         if(isset($_SESSION['admin']) && ($_SESSION['admin']==1)){
           include("includes/account.php");

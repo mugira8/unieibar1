@@ -14,23 +14,25 @@
 if(isset($_GET['postdescription'])){
     $crntquery = mysqli_query($conx,"SELECT deskripzioa, salneurria FROM produktuak WHERE ID LIKE ".$_GET['pic_id']);
     $crntcomm = mysqli_fetch_array($crntquery);
+    $error = false;
 
     if($_POST['deskripzioa'] != ''){
-        $deskripzioa = $_POST['deskripzioa'];
+        $deskripzioa = trim($_POST['deskripzioa']);
     }else{
+        $error = true;
         echo "Deskribapena derrigorrezkoa da";
     }
 
-    if ($_POST['salneurria'] != '') {
-        $salneurria = $_POST['salneurria'];
+    if ($_POST['salneurria'] != '' && is_numeric($_POST['salneurria'])) {
+        $salneurria = trim($_POST['salneurria']);
     }else{
         $salneurria = $crntcomm['salneurria'];
     }
 
-    mysqli_query($conx,"UPDATE produktuak SET deskripzioa = '".$deskripzioa."', salneurria = ".$salneurria." WHERE ID LIKE ".$_GET['pic_id']);
-
-    //header("Location: ".$_SERVER['PHP_SELF']);
-  
+    if($error == false){
+        mysqli_query($conx,"UPDATE produktuak SET deskripzioa = '".$deskripzioa."', salneurria = ".$salneurria." WHERE ID LIKE ".$_GET['pic_id']);
+        header("Location: ".$_SERVER['PHP_SELF']);
+    }  
 }else{
 
 ?>
@@ -55,7 +57,7 @@ if(isset($_GET['postdescription'])){
             ?>
         </textarea><br>
         <br>
-        Salneurri berria: <input type="text" name="salneurria">
+        Salneurri berria: <input type="number" name="salneurria">
         <br>
         <br>
         <input type=submit value="Aldatu">

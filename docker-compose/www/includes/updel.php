@@ -1,4 +1,13 @@
 <?php
+
+$error = array(
+	'izena' 	=> '',
+	'deskripzioa' => '',
+	'salneurria'  => '',
+	'stock'	    => '',
+	'upfile' => '',
+);
+
 if($_SESSION['username'] != "admin@bdweb"){
   header("Location: ".$_SERVER['PHP_SELF']);
 }

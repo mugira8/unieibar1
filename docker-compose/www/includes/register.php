@@ -1,4 +1,5 @@
 <?php
+include ("checker.php");
 // assign defaults
 $data = array('email' 		=> 'email',
 			  'firstname' 	=> 'nombre',
@@ -25,10 +26,8 @@ $error = array('email' 	  => '',
 if (isset($_POST['data'])) {
 	$data = $_POST['data'];
 
-	$formatos_permitidos =  array('png','jpeg','jpg', 'gif');
-	$archivo = $_FILES['imagen']['name'];
-	$extension = pathinfo($archivo, PATHINFO_EXTENSION);
-	if(!in_array($extension, $formatos_permitidos) ) {
+	$checkImagen = checkImage($_FILES['imagen']['name']);
+	if($checkImagen == false) {
     	die('Error formato de imagen no permitido !!');
 	}else{
 		$path = "perfiles/".basename($_FILES['imagen']['name']);
@@ -76,7 +75,7 @@ if (isset($_POST['data'])) {
 		<form action="<?php echo $_SERVER['PHP_SELF']."?action=register"; ?>" method="POST" enctype="multipart/form-data">
 			<p>
 				<label>Email/username*: </label>
-				<input type="text" name="data[email]" placeholder="<?php echo $data['email']; ?>" />
+				<input type="email" name="data[email]" placeholder="<?php echo $data['email']; ?>" />
 				<?php if ($error['email']) echo '<p>', $error['email']; ?>
 			<p>
 			<p>
