@@ -12,7 +12,7 @@
         }
 
         public function testCheckImage(){
-            $iamage = "logo.png";
+            $image = "logo.png";
             $formatos_permitidos = array('png','jpeg','jpg', 'gif');
             $extension = pathinfo($image,PATHINFO_EXTENSION);
             $resultado=false;
