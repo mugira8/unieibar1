@@ -24,7 +24,7 @@
 
         public function testCheckEmail(){
             $email = "aitormugira8@gmail.com";
-            $resultado=false;
+            $resultado = true;
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				return false;
 			}
