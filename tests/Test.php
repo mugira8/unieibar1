@@ -1,39 +1,34 @@
 <?php
-
     use PHPUnit\Framework\TestCase;
     use App\includes\funtzioak;
 
     class Test extends TestCase {
 
-        public function testsanitizar() {
-            $html="<script>alert('test')</script>";
-            $htmlsanitizado=htmlspecialchars($html, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
-            $htmlsanitizado=strip_tags($html);
-            $this->assertEquals($htmlsanitizado, "alert('test')");
+        public function testEscape() {
+            $keyword = "<script>alert('test')</script>";
+            $sanitisazioa = htmlspecialchars($keyword, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
+            $sanitisazioa = strip_tags($keyword);
+            $this->assertEquals($sanitisazioa, "alert('test')");
         }
 
-        public function testirudiaDa(){
-            $irudia="imagen.jpg";
-            $allowed=array('jpg','png');
-            $ext=pathinfo($irudia,PATHINFO_EXTENSION);
+        public function testCheckImage(){
+            $iamage = "logo.png";
+            $formatos_permitidos = array('png','jpeg','jpg', 'gif');
+            $extension = pathinfo($image,PATHINFO_EXTENSION);
             $resultado=false;
-            if(!in_array($ext,$allowed)){
+            if(!in_array($extension, $formatos_permitidos)){
                 $resultado=true;
             }
-            
             $this->assertEquals($resultado, false);
         }
 
-        public function testtestuaDa(){
-            $nombres="/^[a-zA-ZñáéíóúÁÉÍÓÚäëïöüÄËÏÖÜ\s]+$/";
-            $testua="abcdse7847aldfjla";
+        public function testCheckEmail(){
+            $email = "aitormugira8@gmail.com";
             $resultado=false;
-            if(!preg_match($nombres,$testua)){
-                $resultado= true;
-            }
-    
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				return false;
+			}
             $this->assertEquals($resultado, true);
         }
     }
-
 ?>
