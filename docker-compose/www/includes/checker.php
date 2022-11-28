@@ -16,7 +16,7 @@
 	    }
     }
 
-    function validateEmail($email){
+    function checkEmail($email){
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }

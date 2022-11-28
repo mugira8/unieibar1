@@ -26,40 +26,41 @@ $error = array('email' 	  => '',
 if (isset($_POST['data'])) {
 	$data = $_POST['data'];
 
-	$checkImagen = checkImage($_FILES['imagen']['name']);
-	if($checkImagen == false) {
-    	die('Error formato de imagen no permitido !!');
-	}else{
-		$path = "perfiles/".basename($_FILES['imagen']['name']);
-		move_uploaded_file($_FILES['imagen']['tmp_name'], $path);
-		$data['imagen'] = basename($_FILES['imagen']['name']);
-	}
-
-	if($data['email'] != "" && $data['firstname'] != "" && $data['lastname'] != ""){
-		if(strlen($data['password']) >= 6 && $data['password'] == $data['password2']){
-			$sql = "INSERT INTO users(username, password, izena, abizena, hiria, lurraldea, herrialdea, postakodea, telefonoa, irudia) VALUES (";
-			$sql .= "'" . $data['email'] . "', ";
-			$sql .= "'" . md5($data['password'] ). "', ";
-			$sql .= "'" . $data['firstname'] . "', ";
-			$sql .= "'" . $data['lastname'] . "', ";
-			$sql .= "'" . $data['city'] . "', ";
-			$sql .= "'" . $data['stateProv'] . "', ";
-			$sql .= "'" . $data['country'] . "', ";
-			$sql .= "'" . $data['postcode'] . "', ";
-			$sql .= "'" . $data['telephone'] . "', ";
-			$sql .= "'" . $data['imagen']. "')";
-			if (!mysqli_query($conx,"$sql"))
-			{
-				die('Error: ' . mysqli_error());
-			}
-			else {
-				header("Location: index.php");
+	if(checkEmail($data['email']) && $data['email'] != 'admin@bdweb'){
+		$checkImagen = checkImage($_FILES['imagen']['name']);
+		if($checkImagen == false) {
+    		die('Error formato de imagen no permitido !!');
+		}else{
+			$path = "perfiles/".basename($_FILES['imagen']['name']);
+			move_uploaded_file($_FILES['imagen']['tmp_name'], $path);
+			$data['imagen'] = basename($_FILES['imagen']['name']);
+		}
+		if($data['email'] != "" && $data['firstname'] != "" && $data['lastname'] != ""){
+			if(strlen($data['password']) >= 6 && $data['password'] == $data['password2']){
+				$sql = "INSERT INTO users(username, password, izena, abizena, hiria, lurraldea, herrialdea, postakodea, telefonoa, irudia) VALUES (";
+				$sql .= "'" . $data['email'] . "', ";
+				$sql .= "'" . md5($data['password'] ). "', ";
+				$sql .= "'" . $data['firstname'] . "', ";
+				$sql .= "'" . $data['lastname'] . "', ";
+				$sql .= "'" . $data['city'] . "', ";
+				$sql .= "'" . $data['stateProv'] . "', ";
+				$sql .= "'" . $data['country'] . "', ";
+				$sql .= "'" . $data['postcode'] . "', ";
+				$sql .= "'" . $data['telephone'] . "', ";
+				$sql .= "'" . $data['imagen']. "')";
+				if (!mysqli_query($conx,"$sql"))
+				{
+					die('Error: ' . mysqli_error());
+				}
+				else {
+					header("Location: index.php");
+				}
+			}else{
+				echo "Pasahitzarekin arazo bat gertatu da";
 			}
 		}else{
-			echo "Pasahitzarekin arazo bat gertatu da";
+			echo "(*) duten eremu guztiak derrigorrezkoak dira";
 		}
-	}else{
-		echo "(*) duten eremu guztiak derrigorrezkoak dira";
 	}
 }
 ?>

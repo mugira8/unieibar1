@@ -13,7 +13,7 @@ if($_SESSION['username'] != "admin@bdweb"){
 }
 
 if(isset($_GET['pic_id'])){
-    $filequery = mysqli_query($conx,"SELECT pic FROM produktuak WHERE id LIKE ".$_GET['pic_id']);
+$filequery = mysqli_query($conx,"SELECT pic FROM produktuak WHERE id LIKE ".$_GET['pic_id']);
   $delfile = mysqli_fetch_array($filequery);
   unlink("images/".$delfile['pic']);
   mysqli_query($conx,"DELETE FROM produktuak WHERE id = ".$_GET['pic_id']);
