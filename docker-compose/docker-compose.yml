@@ -42,6 +42,30 @@ services:
     depends_on:
       - mysql
 
+  #cron container
+  host-cron:
+    build: 
+      context: ./docker/host-cron
+    networks:
+      - nire-sarea    
+    depends_on:
+      - mysql
+
+  #smt4dev
+  smtp4dev:
+    image: rnwood/smtp4dev
+    container_name: smtp
+    restart: always
+    ports:
+      # Change the number before : to the port the web interface should be accessible on
+      - '5000:80'
+      # Change the number before : to the port the SMTP server should be accessible on
+      - '25:25'
+    networks:
+      - nire-sarea    
+    depends_on:
+      - mysql
+
 # Define networks
 networks:
   nire-sarea:

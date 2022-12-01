@@ -1,5 +1,5 @@
 <?php
-include ("checker.php");
+include_once ("checker.php");
 // assign defaults
 $data = array('email' 		=> 'email',
 			  'firstname' 	=> 'nombre',
@@ -76,17 +76,17 @@ if (isset($_POST['data'])) {
 		<form action="<?php echo $_SERVER['PHP_SELF']."?action=register"; ?>" method="POST" enctype="multipart/form-data">
 			<p>
 				<label>Email/username*: </label>
-				<input type="email" name="data[email]" placeholder="<?php echo $data['email']; ?>" />
+				<input type="email" name="data[email]" placeholder="<?php echo $data['email']; ?>" required/>
 				<?php if ($error['email']) echo '<p>', $error['email']; ?>
 			<p>
 			<p>
 				<label>Izena*: </label>
-				<input type="text" name="data[firstname]" placeholder="<?php echo $data['firstname']; ?>" />
+				<input type="text" name="data[firstname]" placeholder="<?php echo $data['firstname']; ?>" required/>
 				<?php if ($error['firstname']) echo '<p>', $error['firstname']; ?>
 			<p>
 			<p>
 				<label>Abizena*: </label>
-				<input type="text" name="data[lastname]" placeholder="<?php echo $data['lastname']; ?>" />
+				<input type="text" name="data[lastname]" placeholder="<?php echo $data['lastname']; ?>" required/>
 				<?php if ($error['lastname']) echo '<p>', $error['lastname']; ?>
 			<p>
 			<p>
@@ -117,12 +117,12 @@ if (isset($_POST['data'])) {
 			<p>
 			<p>
 				<label>Pasahitza (6 karaktere gutxienez)*: </label>
-				<input type="password" name="data[password]" placeholder="<?php echo $data['password']; ?>" />
+				<input type="password" name="data[password]" placeholder="<?php echo $data['password']; ?>" required/>
 				<?php if ($error['password']) echo '<p>', $error['password']; ?>
 			<p>
             <p>
                 <label>Pasahitza errepikatu*: </label>
-                <input type="password" name="data[password2]" placeholder="<?php echo $data['password2']; ?>" />
+                <input type="password" name="data[password2]" placeholder="<?php echo $data['password2']; ?>" required/>
             <p>
             <p>
                 <label>Irudia aukeratu (PNG.JPEG,JPG,GIF):</label>
