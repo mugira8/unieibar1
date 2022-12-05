@@ -1,2 +1,2 @@
-* * * * * root bash /send_email.sh
+* * * * * root sh /send_email.sh
 #Single container cron example
